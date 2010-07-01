@@ -1,0 +1,11 @@
+*~
+rerun.txt
+bin/**
+WEB-INF/**
+public/**
+!public/stylesheets
+!public/javascripts
+.gems
+.bundle
+vendor
+config/development.yml
