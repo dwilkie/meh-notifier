@@ -81,7 +81,7 @@ module AppEngine
     class Task
       include Rack::Test::Methods
       def app
-        MehPaymentProcessor
+        MehMessager
       end
     end
   end
