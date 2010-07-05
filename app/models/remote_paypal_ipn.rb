@@ -13,7 +13,8 @@ class RemotePaypalIpn < RemoteRequest
       :method => 'POST',
       :follow_redirects => false,
       :headers => {"Content-Type" => "application/x-www-form-urlencoded"}
-    ).code == "200" ? paypal_ipn.destroy : nil
+    )
+    paypal_ipn.destroy
   end
 end
 

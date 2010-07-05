@@ -13,7 +13,8 @@ class RemoteIncomingTextMessage < RemoteRequest
       :method => 'POST',
       :follow_redirects => false,
       :headers => {"Content-Type" => "application/x-www-form-urlencoded"}
-    ).code == "200" ? incoming_text_message.destroy : nil
+    )
+    incoming_text_message.destroy
   end
 end
 
