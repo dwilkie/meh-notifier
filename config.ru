@@ -14,14 +14,10 @@ AppEngine::Rack.configure_app(
 DataMapper.setup(:default, "appengine://auto")
 
 # Exclude test files
-AppEngine::Rack.app.resource_files.exclude %w(features/** spec/**)
+AppEngine::Rack.app.resource_files.exclude %w(/features/** /spec/**)
 
 if(methods.member?("to_xml"))
   map '/tasks' do
-    use AppEngine::Rack::AdminRequired
-  end
-
-  map '/admin' do
     use AppEngine::Rack::AdminRequired
   end
 

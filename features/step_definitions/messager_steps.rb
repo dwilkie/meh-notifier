@@ -1,14 +1,23 @@
 Given /^the remote application is( up| down)$/ do |remote_app_status|
   if remote_app_status =~ /up/
-    register_remote_incoming_text_messages_uri(["200", "OK"])
+    success_status = ["200", "OK"]
+    register_remote_incoming_text_messages_uri(success_status)
+    register_remote_paypal_ipns_uri(success_status)
   else
-    register_remote_incoming_text_messages_uri(["500", "Internal Error"])
+    internal_error_status = ["500", "Internal Error"]
+    register_remote_incoming_text_messages_uri(internal_error_status)
+    register_remote_paypal_ipns_uri(internal_error_status)
   end
 end
 
-When /^an incoming text message is received(?: with: "([^\"]*)")?$/ do |request|
+When /^an? (\w+) is received(?: with: "([^\"]*)")?$/ do |resource, request|
   request = instance_eval(request) if request
-  get "/incoming_text_messages", request
+  resource = resource.pluralize
+  if resource =~ /incoming_text_message/
+    get "/#{resource}", request
+  elsif resource =~ /paypal_ipn/
+    post "/#{resource}", request
+  end
 end
 
 Then /^an? (\w+) should (not )?(?:be created|exist)(?: with:? (params:? )?"([^\"]*)")?$/ do |model_name, no_model, params, fields|
@@ -24,12 +33,14 @@ Then /^an? (\w+) should (not )?(?:be created|exist)(?: with:? (params:? )?"([^\"
   end
 end
 
-Then /^a POST request should (not )?have been made to the remote application(?: containing: "([^\"]*)")?$/ do |no_request, params|
-  no_request ||= ""
-  no_request = "_not" unless no_request.blank?
-  request_key = "POST #{incoming_text_messages_uri}"
-  AppEngine::URLFetch.requests.send("should#{no_request}", include(request_key))
+Then /^a POST request should have been made to the remote application(?: to create a new (.+) containing: "([^\"]*)")?$/ do |resource, params|
+  if resource =~ /incoming text message/
+    request_key = "POST #{incoming_text_messages_uri}"
+  elsif resource =~ /paypal ipn/
+    request_key = "POST #{paypal_ipns_uri}"
+  end
+  AppEngine::URLFetch.requests.should include(request_key)
   AppEngine::URLFetch.requests[request_key][:payload].should include(
-    instance_eval(params).to_query) if no_request.blank?
+    instance_eval(params).to_query)
 end
 

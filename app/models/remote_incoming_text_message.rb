@@ -1,9 +1,5 @@
 # Represents the remote IncomingTextMessage resource
-class RemoteIncomingTextMessage
-  def initialize(remote_application_uri)
-    @remote_application_uri = remote_application_uri
-  end
-
+class RemoteIncomingTextMessage < RemoteRequest
   def create(incoming_text_message)
     uri = URI.join(
       @remote_application_uri,
