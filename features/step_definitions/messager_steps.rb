@@ -1,22 +1,20 @@
-Given /^the remote application is( up| down)$/ do |remote_app_status|
-  if remote_app_status =~ /up/
-    success_status = ["200", "OK"]
-    register_remote_incoming_text_messages_uri(success_status)
-    register_remote_paypal_ipns_uri(success_status)
-  else
-    internal_error_status = ["500", "Internal Error"]
-    register_remote_incoming_text_messages_uri(internal_error_status)
-    register_remote_paypal_ipns_uri(internal_error_status)
-  end
+Given /^the remote application is (up|down)$/ do |remote_app_status|
+  success_status = ["200", "OK"]
+  register_remote_incoming_text_messages_uri(success_status)
+  register_remote_paypal_ipns_uri(success_status)
+  register_offline_request if remote_app_status =~ /down/
 end
 
 When /^an? (\w+) is received(?: with: "([^\"]*)")?$/ do |resource, request|
   request = instance_eval(request) if request
   resource = resource.pluralize
-  if resource =~ /incoming_text_message/
-    get "/#{resource}", request
-  elsif resource =~ /paypal_ipn/
-    post "/#{resource}", request
+  begin
+    if resource =~ /incoming_text_message/
+      get "/#{resource}", request
+    elsif resource =~ /paypal_ipn/
+      post "/#{resource}", request
+    end
+  rescue
   end
 end
 

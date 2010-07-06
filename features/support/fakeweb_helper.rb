@@ -15,6 +15,10 @@ module FakeWebHelper
     )
   end
 
+  def register_offline_request
+    AppEngine::URLFetch.register_offline_request
+  end
+
   def incoming_text_messages_uri
     "http://localhost:3000/incoming_text_messages"
   end
@@ -22,5 +26,6 @@ module FakeWebHelper
   def paypal_ipns_uri
     "http://localhost:3000/paypal_ipns"
   end
+
 end
 

@@ -2,12 +2,19 @@ require 'rack/test'
 module AppEngine
   class URLFetch
     cattr_accessor :requests
+    cattr_accessor :offline_request
 
     def self.clean_registry
       self.requests = {}
+      self.offline_request = false
+    end
+
+    def self.register_offline_request
+      self.offline_request = true
     end
 
     def self.fetch(url, options={})
+
       options[:method] ||= 'GET'
       uri = URI.parse(url)
       self.requests ||= {}
@@ -44,6 +51,7 @@ module AppEngine
         }
         response
       end
+      raise "could not contact #{url}" if self.offline_request
     end
   end
 
