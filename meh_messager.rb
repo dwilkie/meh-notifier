@@ -20,6 +20,11 @@ class MehMessager < Sinatra::Base
   )
 
   # Tasks uris
+
+  get '/tasks/ping' do
+    200
+  end
+
   put '/tasks/incoming_text_messages/:id' do
     incoming_text_message = IncomingTextMessage.get(params["id"])
     remote_payment_request = RemoteIncomingTextMessage.new(
@@ -34,6 +39,17 @@ class MehMessager < Sinatra::Base
       app_settings['remote_application']['uri']
     )
     remote_payment_request.create(incoming_text_message)
+  end
+
+  get '/cron/ping' do
+    5.times do |i|
+      AppEngine::Labs::TaskQueue.add(
+        nil,
+        :url => "/tasks/ping",
+        :method => 'GET',
+        :countdown => (i + 1) * 10
+      )
+    end
   end
 
   # Publically available uris
