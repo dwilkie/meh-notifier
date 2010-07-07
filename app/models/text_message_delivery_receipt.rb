@@ -1,0 +1,4 @@
+class TextMessageDeliveryReceipt < LocalResource
+
+end
+

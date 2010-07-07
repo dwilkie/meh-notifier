@@ -2,6 +2,7 @@ Given /^the remote application is (up|down)$/ do |remote_app_status|
   success_status = ["200", "OK"]
   register_remote_incoming_text_messages_uri(success_status)
   register_remote_paypal_ipns_uri(success_status)
+  register_remote_text_message_delivery_receipts_uri(success_status)
   register_offline_request if remote_app_status =~ /down/
 end
 
@@ -10,6 +11,8 @@ When /^an? (\w+) is received(?: with: "([^\"]*)")?$/ do |resource, request|
   resource = resource.pluralize
   begin
     if resource =~ /incoming_text_message/
+      get "/#{resource}", request
+    elsif resource =~ /text_message_delivery_receipt/
       get "/#{resource}", request
     elsif resource =~ /paypal_ipn/
       post "/#{resource}", request
@@ -31,10 +34,12 @@ Then /^an? (\w+) should (not )?(?:be created|exist)(?: with:? (params:? )?"([^\"
   end
 end
 
-Then /^a POST request should have been made to the remote application(?: to create a new (.+) containing: "([^\"]*)")?$/ do |resource, params|
-  if resource =~ /incoming text message/
+Then /^a POST request should have been made to the remote application(?: to create a new (\w+) containing: "([^\"]*)")?$/ do |resource, params|
+  if resource =~ /incoming_text_message/
     request_key = "POST #{incoming_text_messages_uri}"
-  elsif resource =~ /paypal ipn/
+  elsif resource =~ /text_message_delivery_receipt/
+    request_key = "POST #{text_message_delivery_receipts_uri}"
+  elsif resource =~ /paypal_ipn/
     request_key = "POST #{paypal_ipns_uri}"
   end
   AppEngine::URLFetch.requests.should include(request_key)

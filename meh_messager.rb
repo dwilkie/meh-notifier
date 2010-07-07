@@ -5,13 +5,13 @@ require 'dm-validations'
 require 'dm-observer'
 require 'dm-types'
 require './lib/core_extensions'
+require './lib/inflections'
+require './app/models/local_resource'
+require './app/models/local_resource_observer'
 require './app/models/incoming_text_message'
-require './app/models/incoming_text_message_observer'
+require './app/models/text_message_delivery_receipt'
 require './app/models/paypal_ipn'
-require './app/models/paypal_ipn_observer'
 require './app/models/remote_request'
-require './app/models/remote_incoming_text_message'
-require './app/models/remote_paypal_ipn'
 
 class MehMessager < Sinatra::Base
 
@@ -21,24 +21,19 @@ class MehMessager < Sinatra::Base
 
   # Tasks uris
 
+  # Keep me alive
   get '/tasks/ping' do
     200
   end
 
-  put '/tasks/incoming_text_messages/:id' do
-    incoming_text_message = IncomingTextMessage.get(params["id"])
-    remote_payment_request = RemoteIncomingTextMessage.new(
+  put '/tasks/:resources/:id' do
+    local_resource = ActiveSupport::Inflector.constantize(
+      params[:resources].classify
+    ).get(params["id"])
+    remote_request = RemoteRequest.new(
       app_settings['remote_application']['uri']
     )
-    remote_payment_request.create(incoming_text_message)
-  end
-
-  put '/tasks/paypal_ipns/:id' do
-    incoming_text_message = PaypalIpn.get(params["id"])
-    remote_payment_request = RemotePaypalIpn.new(
-      app_settings['remote_application']['uri']
-    )
-    remote_payment_request.create(incoming_text_message)
+    remote_request.create(local_resource)
   end
 
   get '/cron/ping' do
@@ -56,6 +51,11 @@ class MehMessager < Sinatra::Base
   # SMS Global sends a get request so this is actually the create action
   get '/incoming_text_messages' do
     IncomingTextMessage.create(params)
+  end
+
+  # SMS Global sends a get request so this is actually the create action
+  get '/text_message_delivery_receipts' do
+    TextMessageDeliveryReceipt.create(params)
   end
 
   post '/paypal_ipns' do

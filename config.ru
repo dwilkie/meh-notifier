@@ -3,7 +3,6 @@ require 'dm-core'
 require 'meh_messager'
 require 'appengine-apis/labs/taskqueue'
 require 'appengine-apis/urlfetch'
-require 'appengine-apis/users'
 
 AppEngine::Rack.configure_app(
   :application => 'meh-messager',
@@ -14,7 +13,7 @@ AppEngine::Rack.configure_app(
 DataMapper.setup(:default, "appengine://auto")
 
 # Exclude test files
-AppEngine::Rack.app.resource_files.exclude %w(/features/** /spec/**)
+AppEngine::Rack.app.resource_files.exclude %w(/features/** /spec/** /live_tests/**)
 
 if(methods.member?("to_xml"))
   map '/tasks' do

@@ -7,6 +7,14 @@ module FakeWebHelper
     )
   end
 
+  def register_remote_text_message_delivery_receipts_uri(status)
+    FakeWeb.register_uri(
+      :post,
+      text_message_delivery_receipts_uri,
+      :status => status
+    )
+  end
+
   def register_remote_paypal_ipns_uri(status)
     FakeWeb.register_uri(
       :post,
@@ -21,6 +29,10 @@ module FakeWebHelper
 
   def incoming_text_messages_uri
     "http://localhost:3000/incoming_text_messages"
+  end
+
+  def text_message_delivery_receipts_uri
+    "http://localhost:3000/text_message_delivery_receipts"
   end
 
   def paypal_ipns_uri

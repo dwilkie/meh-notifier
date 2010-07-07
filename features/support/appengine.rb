@@ -71,7 +71,6 @@ module AppEngine
         case options[:method]
 
         when 'POST'
-          debugger
           task.post options[:url], payload
 
         when 'PUT'
