@@ -16,5 +16,5 @@ gem "dm-observer"
 gem "dm-types"
 gem "jruby-openssl"
 gem "sinatra"
-gem "addressable"
+gem "extlib_lite", :git => 'git://github.com/dwilkie/extlib_lite.git'
 
