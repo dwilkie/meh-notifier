@@ -36,7 +36,16 @@ class MehMessager < Sinatra::Base
   end
 
   get '/cron/ping' do
-    5.times do |i|
+    5.tim  # Publically available uris
+  # SMS Global sends a get request so this is actually the create action
+  get '/incoming_text_messages' do
+    IncomingTextMessage.create(params)
+  end
+
+  # SMS Global sends a get request so this is actually the create action
+  get '/text_message_delivery_receipts' do
+    TextMessageDeliveryReceipt.create(params)
+  endes do |i|
       AppEngine::Labs::TaskQueue.add(
         nil,
         :url => "/tasks/ping",
@@ -50,11 +59,18 @@ class MehMessager < Sinatra::Base
   # SMS Global sends a get request so this is actually the create action
   get '/incoming_text_messages' do
     IncomingTextMessage.create(params)
+    "OK"
+  end
+
+  post '/incoming_text_messages' do
+    IncomingTextMessage.create(params)
+    "OK"
   end
 
   # SMS Global sends a get request so this is actually the create action
   get '/text_message_delivery_receipts' do
     TextMessageDeliveryReceipt.create(params)
+    "OK"
   end
 
   post '/paypal_ipns' do

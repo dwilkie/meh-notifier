@@ -1,11 +1,11 @@
 require 'appengine-rack'
 require 'dm-core'
-require 'meh_messager'
+require 'meh_notifier'
 require 'appengine-apis/labs/taskqueue'
 require 'appengine-apis/urlfetch'
 
 AppEngine::Rack.configure_app(
-  :application => 'meh-messager',
+  :application => 'meh-notifier',
   :version => '0-0-1'
 )
 
@@ -25,5 +25,5 @@ if(methods.member?("to_xml"))
   end
 end
 
-run MehMessager
+run MehNotifier
 
