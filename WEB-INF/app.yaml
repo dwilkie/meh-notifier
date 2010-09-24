@@ -1,0 +1,15 @@
+application: meh-notifier
+version: 0-0-1
+runtime: jruby
+resource_files:
+  - exclude: '/features/**'
+  - exclude: '/spec/**'
+  - exclude: '/live_tests/**'
+handlers:
+  - url: /tasks/*
+    login: admin
+  - url: /cron/*
+    login: admin
+  - url: /paypal_ipns
+    secure: always
+

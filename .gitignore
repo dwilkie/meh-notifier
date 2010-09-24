@@ -5,6 +5,7 @@ WEB-INF/**
 public/**
 !public/stylesheets
 !public/javascripts
+!WEB-INF/app.yaml
 .gems
 .bundle
 vendor

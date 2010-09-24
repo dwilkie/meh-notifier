@@ -1,4 +1,4 @@
-app_file = File.join(File.dirname(__FILE__), *%w[.. .. meh_messager])
+app_file = File.join(File.dirname(__FILE__), *%w[.. .. meh_notifier])
 require app_file
 # Force the application name because polyglot breaks the auto-detection logic.
 Sinatra::Application.app_file = app_file
@@ -15,7 +15,7 @@ require 'ruby-debug'
 require 'database_cleaner'
 require 'database_cleaner/cucumber'
 
-Capybara.app = MehMessager
+Capybara.app = MehNotifier
 FakeWeb.allow_net_connect = false
 DataMapper.setup(:default, 'sqlite3::memory:')
 DataMapper.auto_migrate!
@@ -30,7 +30,7 @@ class MyWorld
   include Rspec::Matchers
 
   def app
-    MehMessager.set :environment, :test
+    MehNotifier.set :environment, :test
   end
 end
 

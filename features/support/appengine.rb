@@ -1,23 +1,9 @@
 require 'rack/test'
 module AppEngine
   class URLFetch
-    cattr_accessor :requests
-    cattr_accessor :offline_request
-
-    def self.clean_registry
-      self.requests = {}
-      self.offline_request = false
-    end
-
-    def self.register_offline_request
-      self.offline_request = true
-    end
-
     def self.fetch(url, options={})
-
       options[:method] ||= 'GET'
       uri = URI.parse(url)
-      self.requests ||= {}
 
       http_server =  Net::HTTP.new(uri.host, uri.port)
       http_server.use_ssl = (uri.port == 443)
@@ -25,33 +11,20 @@ module AppEngine
       case options[:method]
 
       when 'HEAD'
-        response = http_server.start do |http|
+        http_server.start do |http|
           http.head(uri.request_uri)
         end
-        self.requests["HEAD #{url}"] = {:response => response.body}
-        response
 
       when 'POST'
-        response = http_server.start do |http|
+        http_server.start do |http|
           http.post(uri.request_uri, options[:payload], options[:headers])
         end
-        self.requests["POST #{url}"] = {
-          :payload => options[:payload],
-          :response => response.body
-        }
-        response
 
       when 'PUT'
-        response = http_server.start do |http|
+        http_server.start do |http|
           http.put(uri.request_uri, options[:payload], options[:headers])
         end
-        self.requests["PUT #{url}"] = {
-          :payload => options[:payload],
-          :response => response.body
-        }
-        response
       end
-      raise "could not contact #{url}" if self.offline_request
     end
   end
 
@@ -88,7 +61,7 @@ module AppEngine
     class Task
       include Rack::Test::Methods
       def app
-        MehMessager
+        MehNotifier
       end
     end
   end
