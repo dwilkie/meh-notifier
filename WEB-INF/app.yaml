@@ -12,4 +12,10 @@ handlers:
     login: admin
   - url: /paypal_ipns
     secure: always
+  - url: /incoming_text_messages
+    secure: always
+  - url: /text_message_delivery_receipts
+    secure: always
+context_params:
+  rack.env: production
 

@@ -6,7 +6,7 @@ public/**
 !public/stylesheets
 !public/javascripts
 !WEB-INF/app.yaml
+!WEB-INF/cron.yaml
 .gems
 .bundle
 vendor
-config/development.yml

@@ -30,7 +30,8 @@ Then /^a POST request should have been made to the remote application(?: to crea
   last_request = FakeWeb.last_request
   remote_uri = send("#{resource.pluralize}_uri")
   last_request.path.should == URI.parse(remote_uri).path
-  last_request.body.should == instance_eval(params).to_query if
-    FakeWeb.registered_uri?(remote_uri)
+  last_request.body.should == Rack::Utils.build_nested_query(
+    instance_eval(params)
+  ) if FakeWeb.registered_uri?(:post, remote_uri)
 end
 

@@ -26,9 +26,7 @@ class MehNotifier < Sinatra::Base
   end
 
   put '/tasks/:resources/:id' do
-    local_resource = ActiveSupport::Inflector.constantize(
-      params[:resources].classify
-    ).get(params["id"])
+    local_resource = params[:resources].classify.constantize.get(params["id"])
     remote_request = RemoteRequest.new(
       app_settings['remote_application']['uri']
     )

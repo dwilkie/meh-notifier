@@ -8,11 +8,12 @@ class RemoteRequest
       @remote_application_uri,
       local_resource.class.resources_name
     )
-    params = local_resource.params
-    params = {local_resource.class.resource_name => params}.to_query
+
+    params = {local_resource.class.resource_name => local_resource.params}
+
     AppEngine::URLFetch.fetch(
       uri.to_s,
-      :payload => params,
+      :payload => Rack::Utils.build_nested_query(params),
       :method => 'POST',
       :follow_redirects => false,
       :headers => {"Content-Type" => "application/x-www-form-urlencoded"}

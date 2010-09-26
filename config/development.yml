@@ -1,0 +1,3 @@
+remote_application:
+  uri: "http://localhost:3000"
+
