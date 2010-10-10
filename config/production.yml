@@ -1,3 +1,3 @@
 remote_application:
-  uri: "https://meh-production.heroku.com/"
+  uri: "https://meh-staging.heroku.com/"
 
