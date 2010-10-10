@@ -9,7 +9,7 @@ Feature: Incoming Text Message
     """
     {
       'to'=>'61447100308',
-      'from'=>'66814822967',
+      'from'=>'668123456789',
       'msg'=>'Edin knif lie km',
       'userfield'=>'123456',
       'date'=>'2010-05-13 23:59:58'
@@ -21,7 +21,7 @@ Feature: Incoming Text Message
     {
       'incoming_text_message' => {
         'to'=>'61447100308',
-        'from'=>'66814822967',
+        'from'=>'668123456789',
         'msg'=>'Edin knif lie km',
         'userfield'=>'123456',
         'date'=>'2010-05-13 23:59:58'
@@ -33,5 +33,5 @@ Feature: Incoming Text Message
     Examples:
       | up_or_down        | should_should_not |
       | up                | should not        |
-#      | down              | should            |
+      | down              | should            |
 

@@ -12,4 +12,5 @@ gem "dm-observer"
 gem "dm-types"
 gem "sinatra"
 gem "extlib_lite"
+gem "tropo-webapi-ruby"
 
