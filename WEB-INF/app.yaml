@@ -16,6 +16,8 @@ handlers:
     secure: always
   - url: /text_message_delivery_receipts
     secure: always
+  - url: /tropo_messages
+    secure: always
 context_params:
   rack.env: production
 
