@@ -5,11 +5,13 @@ require 'dm-validations'
 require 'dm-observer'
 require 'dm-types'
 require 'extlib_lite'
+require 'tropo-webapi-ruby'
 require './app/models/local_resource'
 require './app/models/local_resource_observer'
 require './app/models/incoming_text_message'
 require './app/models/text_message_delivery_receipt'
 require './app/models/paypal_ipn'
+require './app/models/tropo_message'
 require './app/models/remote_request'
 
 class MehNotifier < Sinatra::Base
@@ -54,6 +56,12 @@ class MehNotifier < Sinatra::Base
   # SMS Global sends a get request so this is actually the create action
   get '/text_message_delivery_receipts' do
     TextMessageDeliveryReceipt.create(params)
+    "OK"
+  end
+
+  # tropo
+  post '/tropo_messages.json' do
+    TropoMessage.create(request.env['rack.input'].read)
     "OK"
   end
 

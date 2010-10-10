@@ -8,16 +8,17 @@ Given /^the remote application is (up|down)$/ do |remote_app_status|
 end
 
 When /^an? (\w+) is received(?: with:)?$/ do |resource, request|
-  request = instance_eval(request) if request
   resource = resource.pluralize
+  method = (
+    resource =~ /incoming_text_message/ ||
+    resource =~ /text_message_delivery_receipt/
+  ) ? :get : :post
+  path = "/#{resource}"
+  resource =~ /tropo_message/ ?
+    path = path << ".json" :
+    request = instance_eval(request) unless request.blank?
   begin
-    if resource =~ /incoming_text_message/
-      get "/#{resource}", request
-    elsif resource =~ /text_message_delivery_receipt/
-      get "/#{resource}", request
-    elsif resource =~ /paypal_ipn/
-      post "/#{resource}", request
-    end
+    send(method.to_s, path, request)
   rescue
   end
 end
