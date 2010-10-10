@@ -13,4 +13,5 @@ gem "dm-types"
 gem "sinatra"
 gem "extlib_lite"
 gem "tropo-webapi-ruby"
+gem "tropo_message"
 

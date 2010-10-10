@@ -36,3 +36,7 @@ Then /^a POST request should have been made to the remote application(?: to crea
   ) if FakeWeb.registered_uri?(:post, remote_uri)
 end
 
+Then /^the response should be:$/ do |response|
+  last_response.body.should == response.gsub("\n", "").gsub(/\s{2,}/, "")
+end
+
