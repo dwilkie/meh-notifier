@@ -6,12 +6,14 @@ require 'dm-observer'
 require 'dm-types'
 require 'extlib_lite'
 require 'tropo-webapi-ruby'
+require 'tropo_message'
 require './app/models/local_resource'
 require './app/models/local_resource_observer'
 require './app/models/incoming_text_message'
 require './app/models/text_message_delivery_receipt'
 require './app/models/paypal_ipn'
 require './app/models/tropo_message'
+require './app/models/tropo_incoming_text_message'
 require './app/models/remote_request'
 
 class MehNotifier < Sinatra::Base
@@ -61,8 +63,7 @@ class MehNotifier < Sinatra::Base
 
   # tropo
   post '/tropo_messages.json' do
-    TropoMessage.create(request.env['rack.input'].read)
-    "OK"
+    TropoMessage.new(request.env['rack.input'].read).response
   end
 
   post '/paypal_ipns' do

@@ -10,7 +10,7 @@ Feature: Tropo Incoming Text Message
     {
       "session":{
         "id":"fe9713e2658f5153911e077d795fabf8",
-        "accountId":"50469",
+        "accountId":"12345",
         "timestamp":"2010-10-09T11:49:59.586Z",
         "userType":"HUMAN",
         "initialText":"What?",
@@ -48,7 +48,7 @@ Feature: Tropo Incoming Text Message
       'incoming_text_message' => {
         'session' => {
           'id' => 'fe9713e2658f5153911e077d795fabf8',
-          'account_id' => '50469',
+          'account_id' => '12345',
           'timestamp' => '2010-10-09 11:49:59 UTC',
           'user_type' => 'HUMAN',
           'initial_text' => 'What?',
@@ -80,7 +80,7 @@ Feature: Tropo Incoming Text Message
       }
     }
     """
-    And a tropo_message <should_should_not> exist
+    And a tropo_incoming_text_message <should_should_not> exist
 
     Examples:
       | up_or_down        | should_should_not |
