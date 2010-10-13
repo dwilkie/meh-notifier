@@ -33,3 +33,10 @@ Feature: Text Message Delivery Receipt
       | up                | should not        |
       | down              | should            |
 
+  Scenario: A text message delivery receipt is received with no params
+    When a text_message_delivery_receipt is received with:
+    """
+    """
+
+    Then a text_message_delivery_receipt should not exist
+

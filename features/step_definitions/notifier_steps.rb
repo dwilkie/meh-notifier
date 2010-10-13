@@ -7,19 +7,25 @@ Given /^the remote application is (up|down)$/ do |remote_app_status|
   end
 end
 
-When /^an? (\w+) is received(?: with:)?$/ do |resource, request|
+When /^an? (\w+) is received(?: with query string: "([^\"]*)")?(?: with:|\, body:)$/ do |resource, query_string, request|
   resource = resource.pluralize
-  method = (
-    resource =~ /incoming_text_message/ ||
-    resource =~ /text_message_delivery_receipt/
-  ) ? :get : :post
   path = "/#{resource}"
+  method = :post
+  query_string_params = Rack::Utils.parse_nested_query(query_string)
   resource =~ /tropo_message/ ?
     path = path << ".json" :
-    request = instance_eval(request) unless request.blank?
+    request = request.blank? ? {} : instance_eval(request)
+  if resource =~ /incoming_text_message/ || resource =~ /text_message_delivery_receipt/
+    method = :get
+    query_string_params.merge!(request)
+    request = {}
+  end
+  uri = URI.parse(path)
+  uri.query = Rack::Utils.build_nested_query(query_string_params)
+  path = uri.to_s
   begin
     send(method.to_s, path, request)
-  rescue
+  rescue FakeWeb::NetConnectNotAllowedError
   end
 end
 

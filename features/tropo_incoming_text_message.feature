@@ -5,7 +5,7 @@ Feature: Tropo Incoming Text Message
   Scenario Outline: An incoming text message is received from Tropo
     Given the remote application is <up_or_down>
 
-    When a tropo_message is received with:
+    When a tropo_message is received with query string: "tropo[authentication_token]=abc", body:
     """
     {
       "session":{
@@ -76,7 +76,8 @@ Feature: Tropo Incoming Text Message
             '_content-_type' => 'application/sdp',
             '_from' => '<sip:64EB6BAC-99DF-44C2-871DFBA75C319776@10.6.61.201;channel=private;user=841232894112;msg=What%3f;network=SMS;step=1>;tag=le9j4s'
           }
-        }
+        },
+        'authentication_token' => 'abc'
       }
     }
     """
@@ -86,4 +87,26 @@ Feature: Tropo Incoming Text Message
       | up_or_down        | should_should_not |
       | up                | should not        |
       | down              | should            |
+
+  Scenario: The resource url is hit without a payload
+    When a tropo_message is received with:
+    """
+    """
+
+    Then a tropo_incoming_text_message should not exist
+
+  Scenario: The resource url is hit with a query string but without a payload
+    When a tropo_message is received with query string: "hello=yes", body:
+    """
+    """
+
+    Then a tropo_incoming_text_message should not exist
+
+  Scenario: The resource url is hit with an invalid payload
+    When a tropo_message is received with:
+    """
+    hello:yes:goodbye
+    """
+
+    Then a tropo_incoming_text_message should not exist
 
