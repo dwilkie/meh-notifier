@@ -5,7 +5,7 @@ class TropoMessage
     rescue JSON::ParserError
     end
     if @session_object
-      @tropo_message = Tropo::Message.new(:tropo_session => @session_object)
+      @tropo_message = Tropo::Message.new(@session_object)
       TropoIncomingTextMessage.create(
         :session_object => @session_object,
         :request_params => request_params
