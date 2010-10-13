@@ -5,6 +5,7 @@ resource_files:
   - exclude: '/features/**'
   - exclude: '/spec/**'
   - exclude: '/live_tests/**'
+  - exclude: 'README.markdown'
 handlers:
   - url: /tasks/*
     login: admin
