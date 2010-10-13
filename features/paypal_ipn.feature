@@ -119,3 +119,10 @@ Feature: Paypal IPN
       | up                | should not        |
       | down              | should            |
 
+  Scenario: A paypal ipn is received with no payload
+    When a paypal_ipn is received with:
+    """
+    """
+
+    Then a paypal_ipn should not exist
+

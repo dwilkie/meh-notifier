@@ -35,3 +35,10 @@ Feature: Incoming Text Message
       | up                | should not        |
       | down              | should            |
 
+  Scenario: An incoming text message is received with no params
+    When an incoming_text_message is received with:
+    """
+    """
+
+    Then an incoming_text_message should not exist
+

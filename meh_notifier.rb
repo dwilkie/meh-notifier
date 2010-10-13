@@ -63,7 +63,7 @@ class MehNotifier < Sinatra::Base
 
   # tropo
   post '/tropo_messages.json' do
-    TropoMessage.new(request.env['rack.input'].read).response
+    TropoMessage.new(request.env['rack.input'].read, params).response
   end
 
   post '/paypal_ipns' do
