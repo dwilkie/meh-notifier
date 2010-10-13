@@ -1,4 +1,4 @@
-application: meh-notifier-staging
+application: meh-notifier
 version: 0-0-1
 runtime: jruby
 resource_files:
