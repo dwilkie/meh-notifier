@@ -15,8 +15,6 @@ Feature: Tropo Outgoing Text Message
         "initialText":null,
         "callId":"1dff54394c5987ef5ba0961a35409d26",
         "parameters":{
-          "token":"3bde1e456670b443be6ff6f6e078a129ac84b766290395fc1ee27616360f5b68b359284bd3da27e21e68fbca",
-          "action":"create",
           "msg":"yo",
           "to":"4075551212"
          }
