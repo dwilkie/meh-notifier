@@ -5,7 +5,7 @@ Feature: Tropo Incoming Text Message
   Scenario Outline: An incoming text message is received from Tropo
     Given the remote application is <up_or_down>
 
-    When a tropo_message is received with query string: "tropo[authentication_token]=abc", body:
+    When a tropo_message is received with query string: "tropo[authentication_key]=abc", body:
     """
     {
       "session":{
@@ -77,7 +77,7 @@ Feature: Tropo Incoming Text Message
             '_from' => '<sip:64EB6BAC-99DF-44C2-871DFBA75C319776@10.6.61.201;channel=private;user=841232894112;msg=What%3f;network=SMS;step=1>;tag=le9j4s'
           }
         },
-        'authentication_token' => 'abc'
+        'authentication_key' => 'abc'
       }
     }
     """
