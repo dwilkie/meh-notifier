@@ -8,16 +8,16 @@ Feature: Tropo Outgoing Text Message
     """
     {
       "session":{
-        "id":"00ed5ddc8d53c9a787b8d1b789f22f0a",
+        "id":"606c5f32c46dd3a7ae07c95ee68f8b79",
         "accountId":"12345",
-        "timestamp":"2010-10-09T11:49:59.586Z",
+        "timestamp":"2010-10-15T02:08:19.986Z",
         "userType":"NONE",
         "initialText":null,
-        "callId":"1dff54394c5987ef5ba0961a35409d26",
+        "callId":null,
         "parameters":{
-          "msg":"yo",
+          "text":"Hi%2C+please+verify+your+number+by+replying+with%3A+mn+v+%3Cyour+name%3E",
           "to":"4075551212"
-         }
+        }
       }
     }
     """
@@ -31,7 +31,7 @@ Feature: Tropo Outgoing Text Message
           "channel":"TEXT",
           "network":"SMS",
           "say":[{
-            "value":"yo"
+            "value":"Hi%2C+please+verify+your+number+by+replying+with%3A+mn+v+%3Cyour+name%3E"
           }]
         }
       }]
