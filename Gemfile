@@ -12,6 +12,6 @@ gem "dm-observer"
 gem "dm-types"
 gem "sinatra"
 gem "extlib_lite"
-gem "tropo-webapi-ruby"
-gem "tropo_message"
+gem "tropo-webapi-ruby", :git => "git://github.com/dwilkie/tropo-webapi-ruby.git"
+gem "tropo_message", :git => "git://github.com/dwilkie/tropo_message.git"
 
