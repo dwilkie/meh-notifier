@@ -31,7 +31,7 @@ Feature: Tropo Outgoing Text Message
           "channel":"TEXT",
           "network":"SMS",
           "say":[{
-            "value":"Hi%2C+please+verify+your+number+by+replying+with%3A+mn+v+%3Cyour+name%3E"
+            "value":"Hi, please verify your number by replying with: mn v <your name>"
           }]
         }
       }]
